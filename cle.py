@@ -1,57 +1,79 @@
 import random
 
-def get_choice():
-    options = ["rock", "paper", "scissors"]
-    player = input("Choose: rock ✊, paper 📄, scissors ✂️\n").lower()
-    if player not in options:
-        print("❌ Invalid choice, try again!")
-        return None
-    return player
+name = input("What is your name?\n")
+print(f"Welcome {name} to the Rock, Paper, Scissors game ✊📄✂️")
 
-def get_winner(player, computer):
-    if player == computer:
-        return "draw"
-    elif (player == "rock" and computer == "scissors") or \
-         (player == "paper" and computer == "rock") or \
-         (player == "scissors" and computer == "paper"):
-        return "player"
-    else:
-        return "computer"
+choice = input("Do you know the rules? (yes / no)\n").lower()
 
-def play():
-    score_player = 0
-    score_computer = 0
+if choice == "yes":
+    print("""
+Sure 😊 Here are the rules of Rock Paper Scissors:
 
-    print("🎮 Welcome to Rock Paper Scissors PRO version!\n")
+1- ✊ Rock beats ✂️ Scissors  
+2- 📄 Paper covers ✊ Rock  
+3- ✂️ Scissors cut 📄 Paper  
 
-    while True:
-        player = get_choice()
-        if player is None:
-            continue
+👉 If both choose the same, it's a draw 🤝
+""")
+else:
+    print("No problem 😊 Let's play!")
 
-        computer = random.choice(["rock", "paper", "scissors"])
+options = ["rock", "paper", "scissors"]
 
-        print(f"\nYou chose: {player}")
-        print(f"Computer chose: {computer}")
+player = input("Choose: rock ✊, paper 📄, scissors ✂️\n").lower()
 
-        result = get_winner(player, computer)
+if player not in options:
+    print("❌ Error: invalid choice")
+    exit()
 
-        if result == "player":
-            print("🏆 You win this round!")
-            score_player += 1
-        elif result == "computer":
-            print("😢 Computer wins this round!")
-            score_computer += 1
-        else:
-            print("🤝 It's a draw!")
+computer = random.choice(options)
 
-        print(f"\n📊 Score -> You: {score_player} | Computer: {score_computer}")
+rock_art = """
+    _______
+---'   ____)
+      (_____)
+      (_____)
+      (____)
+---.__(___)
+"""
 
-        again = input("\nDo you want to play again? (yes/no)\n").lower()
-        if again != "yes":
-            break
+paper_art = """
+     _______
+---'    ____)____
+           ______)
+          _______)
+         _______)
+---.__________)
+"""
 
-    print("\n🎮 Thanks for playing!")
-    print(f"Final Score -> You: {score_player} | Computer: {score_computer}")
+scissors_art = """
+    _______
+---'   ____)____
+          ______)
+       __________)
+      (____)
+---.__(___)
+"""
 
-play()
+art = {
+    "rock": rock_art,
+    "paper": paper_art,
+    "scissors": scissors_art
+}
+
+print(f"\nYou chose: {player}")
+print(art[player])
+
+print(f"\nComputer chose: {computer}")
+print(art[computer])
+
+if player == computer:
+    print("\n🤝 It's a draw!")
+elif (player == "rock" and computer == "scissors") or \
+     (player == "paper" and computer == "rock") or \
+     (player == "scissors" and computer == "paper"):
+    print("\n🏆 You win!")
+else:
+    print("\n😢 You lost!")
+
+print(f"\nThank you {name} for playing 🙏🎮")
